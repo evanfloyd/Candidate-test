@@ -1,9 +1,9 @@
 FROM python:3.9.5
 
-WORKDIR /app
-COPY . /app
+EXPOSE 5000
 
-EXPOSE 8000
+ADD main.py .
 
-ENTRYPOINT [ "python" ]
-CMD [ "main.py" ]
+RUN pip install flask prometheus_client werkzeug
+
+CMD [ "python", "./main.py" ]

@@ -1,23 +1,24 @@
 from flask import Flask
 import sys
 import random
+from prometheus_client import make_wsgi_app
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+
 app = Flask(__name__)
 
 
-@app.route('/')
-def magic_ball():
 
+@app.route('/')
+def main():
+     
     ans = True
 
     while ans:
-        question = input("Ask the magic 8 ball a question: (press enter to quit) ")
+        question = print("Ask the magic 8 ball a question: (Ask question verbally) ")
         
         answers = random.randint(1,8)
         
-        if question == "":
-            sys.exit()
-        
-        elif answers == 1:
+        if answers == 1:
             return "It is certain"
         
         elif answers == 2:
@@ -42,6 +43,18 @@ def magic_ball():
             return "My sources say no"
         else:
             return "broken"
+        
+
+
+
+@app.route("/health")
+def health():
+    return "Healthy"
+
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
+    '/metrics': make_wsgi_app()
+})
+
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')

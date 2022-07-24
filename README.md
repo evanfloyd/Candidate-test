@@ -13,7 +13,7 @@ Provides a response to a yes or no question (must be asked verbally/mentally)
 - Clone repo
 - Navigate into Magic-8ball folder
 - Run ```docker build -t <image name> .```
-- Run ```docker run -p 5000:5000 -d <image name> --network <network name>```
+- Run ```docker run --network <network name> -p 5000:5000 -d <image name>```
 - Ask your question verbally or mentally and go to ```http://127.0.0.1:5000/```
 - Refresh page to receive more answers
 
